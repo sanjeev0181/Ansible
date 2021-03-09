@@ -1,0 +1,78 @@
+step :-1 
+sudo adduser ansible-m
+
+step:-2
+/etc/ssh/vi sshd_cofig
+
+PasswaordAuntu :yes
+
+step:3
+
+sudo service ssh restart
+
+step:-4
+
+sudo visudo
+
+ansible-m ALL(ALL:ALL) NoPASSWD:ALL  
+
+step:-6
+step 1 to 5 :-
+same step on client server
+
+
+step:-7
+master server
+su ansible-m
+password:-ansible-m
+
+step:-8
+ansible-m@Ansibleserver:~$ ssh-keygen
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/ansible-m/.ssh/id_rsa):
+Created directory '/home/ansible-m/.ssh'.
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in /home/ansible-m/.ssh/id_rsa.
+Your public key has been saved in /home/ansible-m/.ssh/id_rsa.pub.
+The key fingerprint is:
+SHA256:hWRp/ZCPk1Atm9/R9IsQGJuRYuJerBrDtPNGGqEvGmg ansible-m@Ansibleserver
+The key's randomart image is:
++---[RSA 2048]----+
+|        o*=o     |
+|     . =++O..   .|
+|    . +.o+.X.  o.|
+|   o . o .*.o . o|
+|  + + o S  o.....|
+|.. B +      .... |
+|oE. X            |
+|.o + o           |
+|o . .            |
++----[SHA256]-----+
+ansible-m@Ansibleserver:~$ ls
+ansible-m@Ansibleserver:~$ ls
+ansible-m@Ansibleserver:~$ ls -la
+total 24
+drwxr-xr-x 3 ansible-m ansible-m 4096 Mar  9 06:45 .
+drwxr-xr-x 4 root      root      4096 Mar  9 06:11 ..
+-rw-r--r-- 1 ansible-m ansible-m  220 Mar  9 06:11 .bash_logout
+-rw-r--r-- 1 ansible-m ansible-m 3771 Mar  9 06:11 .bashrc
+-rw-r--r-- 1 ansible-m ansible-m  807 Mar  9 06:11 .profile
+drwx------ 2 ansible-m ansible-m 4096 Mar  9 06:45 .ssh
+
+
+
+step:-9
+ansible-m@Ansibleserver:~$ cd .ssh
+ansible-m@Ansibleserver:~/.ssh$ ls
+id_rsa  id_rsa.pub
+
+step:-10
+cat id_rsa.pub
+
+copy throught password go throught the client server and create one floder .ssd. open (.ssh floder) touch authorized_key. open the sudo authorized_key they be past password
+
+step:-11
+
+ssh ssh client-1@34.239.254.35
+password:-client-1
