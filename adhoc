@@ -1,0 +1,2 @@
+[client]
+3.91.196.6 ansible_ssh_user=client1 ansible_ssh_pass=client1
