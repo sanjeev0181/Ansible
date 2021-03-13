@@ -1,0 +1,268 @@
+https://www.tecmint.com/configure-ansible-managed-nodes-and-run-ad-hoc-commands/
+
+
+check connect two or not
+ansiblemaster@ip-172-31-31-73:~$ ansible client -m ping -o
+3.95.221.46 | SUCCESS => {"ansible_facts": {"discovered_interpreter_python": "/usr/bin/python3"}, "changed": false, "ping": "pong"}
+18.207.195.88 | SUCCESS => {"ansible_facts": {"discovered_interpreter_python": "/usr/bin/python3"}, "changed": false, "ping": "pong"}
+
+
+ansiblemaster@ip-172-31-31-73:~$ ansible client -m shell -a "hostname"
+3.95.221.46 | CHANGED | rc=0 >>
+client2
+18.207.195.88 | CHANGED | rc=0 >>
+client1
+
+
+ansiblemaster@ip-172-31-31-73:~$ ansible client -m shell -a "df -h"
+3.95.221.46 | CHANGED | rc=0 >>
+Filesystem      Size  Used Avail Use% Mounted on
+udev            476M     0  476M   0% /dev
+tmpfs            98M  784K   98M   1% /run
+/dev/xvda1      7.7G  1.4G  6.4G  18% /
+tmpfs           490M     0  490M   0% /dev/shm
+tmpfs           5.0M     0  5.0M   0% /run/lock
+tmpfs           490M     0  490M   0% /sys/fs/cgroup
+/dev/loop0       33M   33M     0 100% /snap/snapd/11107
+/dev/loop1       56M   56M     0 100% /snap/core18/1988
+/dev/loop2       34M   34M     0 100% /snap/amazon-ssm-agent/3552
+/dev/loop3       32M   32M     0 100% /snap/snapd/11036
+tmpfs            98M     0   98M   0% /run/user/1000
+tmpfs            98M     0   98M   0% /run/user/1001
+18.207.195.88 | CHANGED | rc=0 >>
+Filesystem      Size  Used Avail Use% Mounted on
+udev            476M     0  476M   0% /dev
+tmpfs            98M  784K   98M   1% /run
+/dev/xvda1      7.7G  1.4G  6.4G  18% /
+tmpfs           490M     0  490M   0% /dev/shm
+tmpfs           5.0M     0  5.0M   0% /run/lock
+tmpfs           490M     0  490M   0% /sys/fs/cgroup
+/dev/loop0       56M   56M     0 100% /snap/core18/1988
+/dev/loop1       34M   34M     0 100% /snap/amazon-ssm-agent/3552
+/dev/loop2       32M   32M     0 100% /snap/snapd/11036
+/dev/loop3       33M   33M     0 100% /snap/snapd/11107
+tmpfs            98M     0   98M   0% /run/user/1000
+tmpfs            98M     0   98M   0% /run/user/1001
+
+copy file 
+
+ansiblemaster@ip-172-31-31-73:~$ ansible client -m copy -a "src=/home/ansiblemaster/sanjeev dest=/opt/" --become
+18.207.195.88 | CHANGED => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3"
+    },
+    "changed": true,
+    "checksum": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+    "dest": "/opt/sanjeev",
+    "gid": 0,
+    "group": "root",
+    "md5sum": "d41d8cd98f00b204e9800998ecf8427e",
+    "mode": "0644",
+    "owner": "root",
+    "size": 0,
+    "src": "/home/client1/.ansible/tmp/ansible-tmp-1615657254.97-7069-251185894901373/source",
+    "state": "file",
+    "uid": 0
+}
+3.95.221.46 | CHANGED => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3"
+    },
+    "changed": true,
+    "checksum": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+    "dest": "/opt/sanjeev",
+    "gid": 0,
+    "group": "root",
+    "md5sum": "d41d8cd98f00b204e9800998ecf8427e",
+    "mode": "0644",
+    "owner": "root",
+    "size": 0,
+    "src": "/home/client2/.ansible/tmp/ansible-tmp-1615657254.97-7070-97223482698892/source",
+    "state": "file",
+    "uid": 0
+}
+
+
+check to os-release
+
+ansiblemaster@ip-172-31-31-73:~$ ansible client -a "cat /etc/os-release"
+18.207.195.88 | CHANGED | rc=0 >>
+NAME="Ubuntu"
+VERSION="18.04.5 LTS (Bionic Beaver)"
+ID=ubuntu
+ID_LIKE=debian
+PRETTY_NAME="Ubuntu 18.04.5 LTS"
+VERSION_ID="18.04"
+HOME_URL="https://www.ubuntu.com/"
+SUPPORT_URL="https://help.ubuntu.com/"
+BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
+VERSION_CODENAME=bionic
+UBUNTU_CODENAME=bionic
+3.95.221.46 | CHANGED | rc=0 >>
+NAME="Ubuntu"
+VERSION="18.04.5 LTS (Bionic Beaver)"
+ID=ubuntu
+ID_LIKE=debian
+PRETTY_NAME="Ubuntu 18.04.5 LTS"
+VERSION_ID="18.04"
+HOME_URL="https://www.ubuntu.com/"
+SUPPORT_URL="https://help.ubuntu.com/"
+BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
+VERSION_CODENAME=bionic
+UBUNTU_CODENAME=bionic
+
+
+directory create floder
+ansiblemaster@ip-172-31-31-73:~$ ansible client -m file -a dest="/home/file state=directory" --become
+18.207.195.88 | CHANGED => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3"
+    },
+    "changed": true,
+    "gid": 0,
+    "group": "root",
+    "mode": "0755",
+    "owner": "root",
+    "path": "/home/file",
+    "size": 4096,
+    "state": "directory",
+    "uid": 0
+}
+3.95.221.46 | CHANGED => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3"
+    },
+    "changed": true,
+    "gid": 0,
+    "group": "root",
+    "mode": "0755",
+    "owner": "root",
+    "path": "/home/file",
+    "size": 4096,
+    "state": "directory",
+    "uid": 0
+}
+
+
+delete:- directory 
+
+ansiblemaster@ip-172-31-31-73:~$ ansible client -m file -a dest="/home/file state=absent" --become
+18.207.195.88 | CHANGED => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3"
+    },
+    "changed": true,
+    "path": "/home/file",
+    "state": "absent"
+}
+3.95.221.46 | CHANGED => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3"
+    },
+    "changed": true,
+    "path": "/home/file",
+    "state": "absent"
+}
+
+
+
+install process
+
+ansiblemaster@ip-172-31-31-73:~$ ansible client -m apt -a "name=wget state=present" --become -o
+18.207.195.88 | SUCCESS => {"ansible_facts": {"discovered_interpreter_python": "/usr/bin/python3"}, "cache_update_time": 1615617181, "cache_updated": false, "changed": false}
+3.95.221.46 | SUCCESS => {"ansible_facts": {"discovered_interpreter_python": "/usr/bin/python3"}, "cache_update_time": 1615617322, "cache_updated": false, "changed": false}
+
+
+
+ansiblemaster@ip-172-31-31-73:~$ ansible client -m apt -a "name=maven state=present" --become
+3.95.221.46 | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3"
+    },
+    "cache_update_time": 1615617322,
+    "cache_updated": false,
+    "changed": false
+}
+18.207.195.88 | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3"
+    },
+    "cache_update_time": 1615617181,
+    "cache_updated": false,
+    "changed": false
+}
+
+
+
+how to check app version
+
+ansiblemaster@ip-172-31-31-73:~$ ansible client -a "mvn --version"
+3.95.221.46 | CHANGED | rc=0 >>
+Apache Maven 3.6.0
+Maven home: /usr/share/maven
+Java version: 11.0.10, vendor: Ubuntu, runtime: /usr/lib/jvm/java-11-openjdk-amd64
+Default locale: en, platform encoding: UTF-8
+OS name: "linux", version: "5.4.0-1038-aws", arch: "amd64", family: "unix"
+18.207.195.88 | CHANGED | rc=0 >>
+Apache Maven 3.6.0
+Maven home: /usr/share/maven
+Java version: 11.0.10, vendor: Ubuntu, runtime: /usr/lib/jvm/java-11-openjdk-amd64
+Default locale: en, platform encoding: UTF-8
+OS name: "linux", version: "5.4.0-1038-aws", arch: "amd64", family: "unix"
+
+
+delete app 
+
+ansiblemaster@ip-172-31-31-73:~$ ansible client -m apt -a "name=maven state=absent" --become -o
+18.207.195.88 | SUCCESS => {"ansible_facts": {"discovered_interpreter_python": "/usr/bin/python3"}, "changed": false}
+3.95.221.46 | SUCCESS => {"ansible_facts": {"discovered_interpreter_python": "/usr/bin/python3"}, "changed": false}
+
+
+
+
+create adduser
+
+
+
+
+
+
+
+
+
+user del commands
+ansiblemaster@ip-172-31-31-73:~$ ansible client -m user -a "name=client9 state=absent" --become
+3.95.221.46 | CHANGED => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3"
+    },
+    "changed": true,
+    "force": false,
+    "name": "client9",
+    "remove": false,
+    "state": "absent"
+}
+18.207.195.88 | CHANGED => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3"
+    },
+    "changed": true,
+    "force": false,
+    "name": "client9",
+    "remove": false,
+    "state": "absent"
+}
+
+
+
+
+
+
+
+ansiblemaster@ip-172-31-31-73:~$ ansible -a "uptime" all
+3.95.221.46 | CHANGED | rc=0 >>
+ 18:35:48 up  1:09,  5 users,  load average: 0.00, 0.01, 0.00
+18.207.195.88 | CHANGED | rc=0 >>
+ 18:35:48 up  1:10,  6 users,  load average: 0.00, 0.00, 0.00
