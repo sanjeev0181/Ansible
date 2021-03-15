@@ -1,2 +1,19 @@
+https://medium.com/appgambit/configure-jenkins-with-ansible-7bfaa387fb1c
 [client]
 3.91.196.6 ansible_ssh_user=client1 ansible_ssh_pass=client1
+
+
+
+
+
+install ansible in jenkins
+
+https://www.cidevops.com/2018/05/install-jenkins-using-ansible-playbook.html#:~:text=please%20Click%20here%20for%20Java%20Playbook.&text=make%20sure%20you%20add%20below,changed%20(in%20red%20color).&text=This%20should%20install%20Jenkins%20on,see%20Jenkins%20up%20and%20running.
+
+
+video
+https://asciinema.org/a/207072
+
+ansible to jenkins
+
+https://devops4solutions.com/integrate-ansible-with-jenkins/
