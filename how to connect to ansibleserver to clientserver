@@ -16,9 +16,20 @@ sudo visudo
 
 cd /etc/vi hostname
 
+cd /etc/hosts
+
+sudo shutdown now -r
+
 step:- 5
 
 ansible-m ALL(ALL:ALL) NoPASSWD:ALL  
+
+
+
+After install the ansible 
+https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#prerequisites
+
+
 
 step:-6
 step 1 to 5 :-
